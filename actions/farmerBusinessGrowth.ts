@@ -1,4 +1,9 @@
-import { Request, Response } from "@/types/types";
+import {
+  Request,
+  Response,
+  SocialRequest,
+  SocialResponse,
+} from "@/types/types";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL_AGRO;
 type Endpoint = string;
@@ -18,7 +23,6 @@ export const getAll = async (endpoint: Endpoint) => {
   }
 };
 
-
 export const create = async (
   endpoint: Endpoint,
   values: Request
@@ -27,9 +31,10 @@ export const create = async (
     const { minBalanceThreshold, ...rest } = values;
     const dataToSend = {
       ...rest,
-      minBalanceThreshold: endpoint === "api/assets" ? minBalanceThreshold : undefined,
+      minBalanceThreshold:
+        endpoint === "api/assets" ? minBalanceThreshold : undefined,
     };
-    
+
     const res = await fetch(`${API_URL}${endpoint}`, {
       method: "POST",
       headers: {
@@ -60,9 +65,10 @@ export const edit = async (
     const { minBalanceThreshold, ...rest } = values;
     const dataToSend = {
       ...rest,
-      minBalanceThreshold: endpoint === "api/assets" ? minBalanceThreshold : undefined,
+      minBalanceThreshold:
+        endpoint === "api/assets" ? minBalanceThreshold : undefined,
     };
-    
+
     const res = await fetch(`${API_URL}${endpoint}`, {
       method: "PUT",
       headers: {
@@ -70,7 +76,7 @@ export const edit = async (
       },
       body: JSON.stringify(dataToSend),
     });
-    
+
     const responseData = await res.json();
     return responseData;
   } catch (error) {
@@ -79,6 +85,53 @@ export const edit = async (
   }
 };
 
+export const createSocial = async (
+  endpoint: Endpoint,
+  values: SocialRequest
+): Promise<SocialResponse> => {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!res.ok) {
+      // Handle errors here
+      const errorMessage = await res.text();
+      throw new Error(errorMessage);
+    }
+
+    const responseData = await res.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error creating data:", error);
+    throw error;
+  }
+};
+
+export const editSocial = async (
+  endpoint: Endpoint,
+  values: SocialRequest
+): Promise<SocialResponse> => {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    const responseData = await res.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
 export const editAsset = async (
   endpoint: Endpoint,
   values: Request

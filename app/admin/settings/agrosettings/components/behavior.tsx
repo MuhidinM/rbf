@@ -10,6 +10,7 @@ import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Edit, Plus } from "lucide-react";
 import { SocialResponse } from "@/types/types";
 import { getAll } from "@/actions/farmerBusinessGrowth";
+import SocialForm from "./social-form";
 
 const Behavior = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -103,18 +104,18 @@ const Behavior = () => {
             <div className="flex justify-center mx-auto">No data available</div>
           )}
         </CollapsibleContent>
-        {/* {addNew === "returnCapTable" && (
-          <AgroForm
+        {addNew === "returnCapTable" && (
+          <SocialForm
             setAddNew={setAddNew}
             updated={updated}
             setUpdated={setUpdated}
             setLoading={setLoading}
             loading={loading}
             agroData={behavior}
-            largestWeight={largestWeight}
-            type="ANNUALFARMINCOME"
+            largestWeight={8}
+            type="api/behaviours"
           />
-        )} */}
+        )}
       </Collapsible>
     </div>
   );

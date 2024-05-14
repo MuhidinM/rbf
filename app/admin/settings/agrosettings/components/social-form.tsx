@@ -11,11 +11,17 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Response } from "@/types/types";
+import { SocialResponse } from "@/types/types";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Check, Trash, X } from "lucide-react";
-import { create, deleteWithId, edit } from "@/actions/farmerBusinessGrowth";
+import {
+  create,
+  createSocial,
+  deleteWithId,
+  edit,
+  editSocial,
+} from "@/actions/farmerBusinessGrowth";
 import { cn } from "@/lib/utils";
 
 type AgroFromProps = {
@@ -24,12 +30,12 @@ type AgroFromProps = {
   setUpdated(updated: boolean): void;
   setLoading(loading: boolean): void;
   setAddNew(newState: string): void;
-  agroData: Response | undefined;
+  agroData: SocialResponse | undefined;
   largestWeight: number;
   type: string;
 };
 
-const AgroForm: FC<AgroFromProps> = ({
+const SocialForm: FC<AgroFromProps> = ({
   setAddNew,
   agroData,
   updated,
@@ -40,46 +46,31 @@ const AgroForm: FC<AgroFromProps> = ({
   type,
 }) => {
   const formSchema = z.object({
-    balanceThreshold: z.coerce.number(),
-    minWeight: z.coerce.number(),
+    name: z.coerce.string(),
     description: z.coerce.string(),
     updatedAt: z.coerce.string(),
-    minBalanceThreshold: z.coerce.number(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: agroData
       ? {
-          balanceThreshold: agroData.balanceThreshold,
-          minWeight: agroData.minWeight,
+          name: agroData.name,
           description: agroData.description,
-          minBalanceThreshold: agroData.minBalanceThreshold || 0,
         }
       : {
-          balanceThreshold: 0,
-          minWeight: 0,
+          name: "",
           description: "",
-          minBalanceThreshold: 0,
         },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    // console.log(values);
     try {
       setLoading(true);
-      const dataToSend =
-        type === "api/assets"
-          ? values
-          : {
-              balanceThreshold: values.balanceThreshold,
-              minWeight: values.minWeight,
-              description: values.description,
-              updatedAt: values.updatedAt,
-            };
-
       agroData
-        ? await edit(`${type}/${agroData.id}`, dataToSend)
-        : await create(type, dataToSend);
+        ? await editSocial(`${type}/${agroData.id}`, values)
+        : await createSocial(type, values);
       setUpdated(!updated);
       toast.success(
         agroData ? "Updated Successfully!" : "Created Successfully!"
@@ -91,7 +82,6 @@ const AgroForm: FC<AgroFromProps> = ({
       setLoading(false);
     }
   };
-
   const onDelete = async () => {
     try {
       setLoading(true);
@@ -111,62 +101,20 @@ const AgroForm: FC<AgroFromProps> = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-1 w-full space-x-2">
-            <div
-              className={cn(
-                "grid w-full gap-2 ",
-                type === "api/assets" ? "grid-cols-4" : "grid-cols-3"
-              )}
-            >
+            <div className={"grid w-full gap-2 grid-cols-2"}>
               <FormField
                 control={form.control}
-                name="balanceThreshold"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Balance Threshold"
-                        {...field}
-                      />
+                      <Input placeholder="Balance Threshold" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="minWeight"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Min Weight"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {type === "api/assets" && (
-                <FormField
-                  control={form.control}
-                  name="minBalanceThreshold"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Min Balance Threshold"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
+
               <FormField
                 control={form.control}
                 name="description"
@@ -215,4 +163,4 @@ const AgroForm: FC<AgroFromProps> = ({
   );
 };
 
-export default AgroForm;
+export default SocialForm;
