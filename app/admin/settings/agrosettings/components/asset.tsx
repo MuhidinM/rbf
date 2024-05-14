@@ -9,7 +9,7 @@ import {
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Edit, Plus } from "lucide-react";
 import { Response } from "@/types/types";
-import { getAll } from "@/actions/farmerBusinessGrowth";
+import { getAll } from "@/actions/agro-setting";
 import AgroForm from "./agro-form";
 
 const Asset = () => {

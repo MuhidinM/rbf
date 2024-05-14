@@ -10,7 +10,7 @@ import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Edit, Plus } from "lucide-react";
 import { Response } from "@/types/types";
 import AgroForm from "./agro-form";
-import { getAll } from "@/actions/farmerBusinessGrowth";
+import { getAll } from "@/actions/agro-setting";
 
 const Fainc = () => {
   const [isOpen, setIsOpen] = useState(true);

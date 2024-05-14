@@ -15,7 +15,7 @@ import { Response } from "@/types/types";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Check, Trash, X } from "lucide-react";
-import { create, deleteWithId, edit } from "@/actions/farmerBusinessGrowth";
+import { create, deleteWithId, edit } from "@/actions/agro-setting";
 import { cn } from "@/lib/utils";
 
 type AgroFromProps = {

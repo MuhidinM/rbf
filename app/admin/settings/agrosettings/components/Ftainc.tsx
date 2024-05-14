@@ -11,7 +11,7 @@ import { Edit, Plus } from "lucide-react";
 import { Response } from "@/types/types";
 import { getFtainc } from "@/actions/agro-action";
 import AgroForm from "./agro-form";
-import { getAll } from "@/actions/farmerBusinessGrowth";
+import { getAll } from "@/actions/agro-setting";
 
 const Ftainc = () => {
   const [isOpen, setIsOpen] = useState(true);

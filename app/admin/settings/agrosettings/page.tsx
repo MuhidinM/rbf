@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   LineChart,
   Speech,
+  Wallet,
   Weight,
 } from "lucide-react";
 import Fainc from "./components/Fainc";
@@ -36,6 +37,9 @@ const AgroSettingsPage: React.FC = () => {
           <TabsTrigger value="weight" className="py-1">
             <Weight className="w-5 h-5 mr-2" /> Weight
           </TabsTrigger>
+          <TabsTrigger value="account" className="py-1">
+            <Wallet className="w-5 h-5 mr-2" /> Account
+          </TabsTrigger>
           <TabsTrigger value="fa" className="py-1">
             <LineChart className="w-5 h-5 mr-2" /> Farmer Business Growth
           </TabsTrigger>
@@ -48,6 +52,7 @@ const AgroSettingsPage: React.FC = () => {
         <TabsContent value="weight">
           <Weight1 />
         </TabsContent>
+        <TabsContent value="account"></TabsContent>
         <TabsContent value="fa">
           <Fainc />
           <Ftainc />

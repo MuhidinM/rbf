@@ -21,7 +21,7 @@ import {
   deleteWithId,
   edit,
   editSocial,
-} from "@/actions/farmerBusinessGrowth";
+} from "@/actions/agro-setting";
 import { cn } from "@/lib/utils";
 
 type AgroFromProps = {
