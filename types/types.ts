@@ -159,3 +159,47 @@ export interface UserResponse {
   passwordChanged: boolean;
   updatedAt: string;
 }
+
+export interface AssetRequest {
+  scoringDataType: string;
+  rangeStart: number | null;
+  rangeEnd: number | null;
+  weight: number | null;
+}
+export interface AssetResponse {
+  id: number;
+  scoringDataType: string;
+  rangeStart: number | null;
+  rangeEnd: number | null;
+  weight: number | null;
+}
+
+export interface Request {
+  balanceThreshold: number;
+  minWeight: number;
+  description: string;
+  updatedAt: string;
+  minBalanceThreshold?: number; // Include minBalanceThreshold in the Request interface
+}
+
+export interface Response {
+  balanceThreshold: number;
+  minWeight: number;
+  minBalanceThreshold?: number;
+  description: string;
+  updatedAt: string;
+  id: number;
+}
+
+export interface SocialRequest {
+  name: string;
+  description: string;
+  updatedAt: string;
+}
+
+export interface SocialResponse {
+  name: string;
+  description: string;
+  updatedAt: string;
+  id: number;
+}

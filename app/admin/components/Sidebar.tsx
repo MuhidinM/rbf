@@ -8,12 +8,12 @@ type SidebarProps = {
 const Sidebar: FC<SidebarProps> = ({ isOpened, setIsOpened }) => {
   return (
     <div
-      className={`fixed left-0 top-16 -mt-2 bg-white z-[100] shadow-lg border bottom-0 ${
+      className={`fixed left-0 top-16 -mt-2 bg-white shadow-lg border bottom-0 ${
         isOpened ? "hidden md:block w-64" : "w-64"
       }`}
     >
       <MainNav
-        className="mx-5 px-1"
+        className="px-1 mx-5"
         setIsOpened={setIsOpened}
         isOpened={isOpened}
       />

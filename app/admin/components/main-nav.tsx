@@ -83,6 +83,20 @@ export const MainNav: FC<SidebarProps> = ({
             />
           ),
         },
+        {
+          href: `/admin/cohorts/agrocohorts`,
+          label: "Agro Cohorts",
+          active: pathname === `/admin/cohorts/agrocohorts`,
+          authorized: true,
+          icon: (
+            <Users2Icon
+              size={15}
+              color={`${
+                pathname === `/admin/cohorts/agrocohorts` ? "#fff" : "#707E94"
+              }`}
+            />
+          ),
+        },
       ],
       icon: (
         <Users
@@ -122,6 +136,22 @@ export const MainNav: FC<SidebarProps> = ({
               size={15}
               color={`${
                 pathname === `/admin/calculator/bnplcalculator`
+                  ? "#fff"
+                  : "#707E94"
+              }`}
+            />
+          ),
+        },
+        {
+          href: `/admin/calculator/agrocalculator`,
+          label: "Agro Calculator",
+          active: pathname === `/admin/calculator/agrocalculator`,
+          authorized: true,
+          icon: (
+            <Calculator
+              size={15}
+              color={`${
+                pathname === `/admin/calculator/agrocalculator`
                   ? "#fff"
                   : "#707E94"
               }`}
@@ -210,6 +240,20 @@ export const MainNav: FC<SidebarProps> = ({
             />
           ),
         },
+        {
+          href: `/admin/settings/agrosettings`,
+          label: "Agro Settings",
+          active: pathname === `/admin/settings/agrosettings`,
+          authorized: true,
+          icon: (
+            <Settings
+              size={15}
+              color={`${
+                pathname === `/admin/settings/agrosettings` ? "#fff" : "#707E94"
+              }`}
+            />
+          ),
+        },
       ],
       authorized: true,
       icon: (
@@ -249,7 +293,7 @@ export const MainNav: FC<SidebarProps> = ({
                   if (!route.items) router.push(route.href);
                 }}
               >
-                <span className="w-full flex items-center justify-between">
+                <span className="flex items-center justify-between w-full">
                   <span className="flex items-center w-full space-x-2">
                     <span>{route?.icon}</span>
                     <Link
