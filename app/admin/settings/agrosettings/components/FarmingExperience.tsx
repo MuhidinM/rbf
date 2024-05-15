@@ -8,16 +8,18 @@ import {
 } from "@/components/ui/collapsible";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Edit, Plus } from "lucide-react";
-import { SocialResponse } from "@/types/types";
+import { AccountResponse } from "@/types/types";
 import { getAll } from "@/actions/agro-setting";
-import SocialForm from "./social-form";
+import AccountForm from "./account-form";
 
-const Experience = () => {
+const FarmingExperience = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [addNew, setAddNew] = useState("");
   const [largestWeight, setLargestWeight] = useState<number>(0);
-  const [experiences, setExperiences] = useState<SocialResponse[]>([]);
-  const [experience, setExperience] = useState<SocialResponse>();
+  const [farmingExperiences, setFarmingExperiences] = useState<
+    AccountResponse[]
+  >([]);
+  const [farmingExperience, setFarmingExperience] = useState<AccountResponse>();
   const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -27,7 +29,7 @@ const Experience = () => {
       try {
         setLoading(true);
         const res = await getAll("api/farmingExpriences/default");
-        setExperiences(res);
+        setFarmingExperiences(res);
       } catch (error) {
         // @ts-ignore
         setError(error);
@@ -37,7 +39,7 @@ const Experience = () => {
     };
     fetchData();
   }, [updated]);
-  // console.log(Experiences);
+  // console.log(FarmingExperiences);
   return (
     <div className="grid w-full gap-4">
       <Collapsible
@@ -55,9 +57,15 @@ const Experience = () => {
           </CollapsibleTrigger>
         </div>
         <div className="flex space-x-2">
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full grid-cols-4 gap-2">
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
-              Name
+              Maximum Month
+            </div>
+            <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
+              Minimum Month
+            </div>
+            <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
+              Minimum Weight
             </div>
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
               Description
@@ -68,7 +76,7 @@ const Experience = () => {
             className="bg-cyan-500"
             disabled={loading}
             onClick={() => {
-              setExperience(undefined);
+              setFarmingExperience(undefined);
               setAddNew("returnCapTable");
             }}
           >
@@ -76,12 +84,18 @@ const Experience = () => {
           </Button>
         </div>
         <CollapsibleContent className="space-y-2">
-          {experiences && experiences.length > 0 ? (
-            experiences.map((item) => (
+          {farmingExperiences && farmingExperiences.length > 0 ? (
+            farmingExperiences.map((item) => (
               <div className="flex space-x-2" key={item.id}>
-                <div className="grid w-full grid-cols-2 gap-2">
+                <div className="grid w-full grid-cols-4 gap-2">
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
-                    {item.name}
+                    {item.maxMonth}
+                  </div>
+                  <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
+                    {item.minMonth}
+                  </div>
+                  <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
+                    {item.minWeight}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.description}
@@ -92,7 +106,7 @@ const Experience = () => {
                   variant="outline"
                   disabled={loading}
                   onClick={() => {
-                    setExperience(item);
+                    setFarmingExperience(item);
                     setAddNew("returnCapTable");
                   }}
                 >
@@ -105,13 +119,13 @@ const Experience = () => {
           )}
         </CollapsibleContent>
         {addNew === "returnCapTable" && (
-          <SocialForm
+          <AccountForm
             setAddNew={setAddNew}
             updated={updated}
             setUpdated={setUpdated}
             setLoading={setLoading}
             loading={loading}
-            agroData={experience}
+            agroData={farmingExperience}
             largestWeight={8}
             type="api/farmingExpriences"
           />
@@ -121,4 +135,4 @@ const Experience = () => {
   );
 };
 
-export default Experience;
+export default FarmingExperience;

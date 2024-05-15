@@ -18,6 +18,9 @@ import Asset from "./components/asset";
 import Literacy from "./components/literacy";
 import Behavior from "./components/behavior";
 import Experience from "./components/experience";
+import AccountBalance from "./components/AccountBalance";
+import AccountDuration from "./components/AccountDuration";
+import FarmingExperience from "./components/FarmingExperience";
 
 const AgroSettingsPage: React.FC = () => {
   return (
@@ -52,7 +55,10 @@ const AgroSettingsPage: React.FC = () => {
         <TabsContent value="weight">
           <Weight1 />
         </TabsContent>
-        <TabsContent value="account"></TabsContent>
+        <TabsContent value="account">
+          <AccountBalance />
+          <AccountDuration />
+        </TabsContent>
         <TabsContent value="fa">
           <Fainc />
           <Ftainc />
@@ -62,7 +68,7 @@ const AgroSettingsPage: React.FC = () => {
         <TabsContent value="social">
           <Literacy />
           <Behavior />
-          <Experience />
+          <FarmingExperience />
         </TabsContent>
       </Tabs>
     </div>

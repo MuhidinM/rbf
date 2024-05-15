@@ -203,3 +203,20 @@ export interface SocialResponse {
   updatedAt: string;
   id: number;
 }
+
+export interface AccountRequest {
+  maxMonth: number;
+  minMonth: number;
+  minWeight: number;
+  description: string;
+  updatedAt: string;
+}
+
+export interface AccountResponse {
+  maxMonth: number;
+  minMonth: number;
+  minWeight: number;
+  description: string;
+  updatedAt: string;
+  id: number;
+}

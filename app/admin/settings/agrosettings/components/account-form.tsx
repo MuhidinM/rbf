@@ -11,7 +11,7 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SocialResponse } from "@/types/types";
+import { AccountResponse } from "@/types/types";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Check, Trash, X } from "lucide-react";
@@ -23,12 +23,12 @@ type AgroFromProps = {
   setUpdated(updated: boolean): void;
   setLoading(loading: boolean): void;
   setAddNew(newState: string): void;
-  agroData: SocialResponse | undefined;
+  agroData: AccountResponse | undefined;
   largestWeight: number;
   type: string;
 };
 
-const SocialForm: FC<AgroFromProps> = ({
+const AccountForm: FC<AgroFromProps> = ({
   setAddNew,
   agroData,
   updated,
@@ -39,7 +39,9 @@ const SocialForm: FC<AgroFromProps> = ({
   type,
 }) => {
   const formSchema = z.object({
-    name: z.coerce.string(),
+    maxMonth: z.coerce.number(),
+    minMonth: z.coerce.number(),
+    minWeight: z.coerce.number(),
     description: z.coerce.string(),
     updatedAt: z.coerce.string(),
   });
@@ -48,11 +50,15 @@ const SocialForm: FC<AgroFromProps> = ({
     resolver: zodResolver(formSchema),
     defaultValues: agroData
       ? {
-          name: agroData.name,
+          maxMonth: agroData.maxMonth,
+          minMonth: agroData.minMonth,
+          minWeight: agroData.minWeight,
           description: agroData.description,
         }
       : {
-          name: "",
+          maxMonth: 0,
+          minMonth: 0,
+          minWeight: 0,
           description: "",
         },
   });
@@ -94,20 +100,56 @@ const SocialForm: FC<AgroFromProps> = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-1 w-full space-x-2">
-            <div className={"grid w-full gap-2 grid-cols-2"}>
+            <div className={"grid w-full gap-2 grid-cols-4"}>
               <FormField
                 control={form.control}
-                name="name"
+                name="minMonth"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Balance Threshold" {...field} />
+                      <Input
+                        type="number"
+                        placeholder="Balance Threshold"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="maxMonth"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Description"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="minWeight"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Description"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="description"
@@ -156,4 +198,4 @@ const SocialForm: FC<AgroFromProps> = ({
   );
 };
 
-export default SocialForm;
+export default AccountForm;

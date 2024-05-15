@@ -9,15 +9,15 @@ import {
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Edit, Plus } from "lucide-react";
 import { Response } from "@/types/types";
-import { getAll } from "@/actions/agro-setting";
 import AgroForm from "./agro-form";
+import { getAll } from "@/actions/agro-setting";
 
-const Asset = () => {
+const AccountBalance = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [addNew, setAddNew] = useState("");
   const [largestWeight, setLargestWeight] = useState<number>(0);
-  const [assets, setAssets] = useState<Response[]>([]);
-  const [asset, setAsset] = useState<Response>();
+  const [accountBalances, setAccountBalances] = useState<Response[]>([]);
+  const [accountBalance, setAccountBalance] = useState<Response>();
   const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,8 +26,8 @@ const Asset = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await getAll("api/assets/default");
-        setAssets(res);
+        const res = await getAll("api/averageDailyBalances/default");
+        setAccountBalances(res);
       } catch (error) {
         // @ts-ignore
         setError(error);
@@ -37,7 +37,7 @@ const Asset = () => {
     };
     fetchData();
   }, [updated]);
-    console.log(assets);
+  // console.log(AccountBalances);
   return (
     <div className="grid w-full gap-4">
       <Collapsible
@@ -46,7 +46,7 @@ const Asset = () => {
         className="w-full space-y-2"
       >
         <div className="flex items-center justify-between px-1 space-x-4">
-          <h4 className="text-sm font-semibold">Assets</h4>
+          <h4 className="text-sm font-semibold">Average Daily Balance</h4>
           <CollapsibleTrigger asChild>
             <Button variant="ghost" size="sm">
               <CaretSortIcon className="w-4 h-4" />
@@ -55,15 +55,12 @@ const Asset = () => {
           </CollapsibleTrigger>
         </div>
         <div className="flex space-x-2">
-          <div className="grid w-full grid-cols-4 gap-2">
+          <div className="grid w-full grid-cols-3 gap-2">
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
               Balance Threshold
             </div>
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
               Minimum Weight
-            </div>
-            <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
-              Minimum Balance Threshold
             </div>
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
               Description
@@ -74,7 +71,7 @@ const Asset = () => {
             className="bg-cyan-500"
             disabled={loading}
             onClick={() => {
-              setAsset(undefined);
+              setAccountBalance(undefined);
               setAddNew("returnCapTable");
             }}
           >
@@ -82,18 +79,15 @@ const Asset = () => {
           </Button>
         </div>
         <CollapsibleContent className="space-y-2">
-          {assets && assets.length > 0 ? (
-            assets.map((item) => (
+          {accountBalances && accountBalances.length > 0 ? (
+            accountBalances.map((item) => (
               <div className="flex space-x-2" key={item.id}>
-                <div className="grid w-full grid-cols-4 gap-2">
+                <div className="grid w-full grid-cols-3 gap-2">
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.balanceThreshold}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.minWeight}
-                  </div>
-                  <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
-                    {item.minBalanceThreshold}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.description}
@@ -104,7 +98,7 @@ const Asset = () => {
                   variant="outline"
                   disabled={loading}
                   onClick={() => {
-                    setAsset(item);
+                    setAccountBalance(item);
                     setAddNew("returnCapTable");
                   }}
                 >
@@ -123,9 +117,9 @@ const Asset = () => {
             setUpdated={setUpdated}
             setLoading={setLoading}
             loading={loading}
-            agroData={asset}
-            largestWeight={4}
-            type="api/assets"
+            agroData={accountBalance}
+            largestWeight={8}
+            type="api/averageDailyBalances"
           />
         )}
       </Collapsible>
@@ -133,4 +127,4 @@ const Asset = () => {
   );
 };
 
-export default Asset;
+export default AccountBalance;
