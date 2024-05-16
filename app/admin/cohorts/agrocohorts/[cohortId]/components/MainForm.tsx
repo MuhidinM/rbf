@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { createData, deleteData, editData } from "@/actions/agro-cohorts";
 import AccountDuration from "./creators/AccountDuration";
+import Experience from "./creators/Experience";
 
 const steps = [
   {
@@ -55,6 +56,9 @@ const steps = [
   },
   {
     id: "10",
+  },
+  {
+    id: "11",
   },
 ];
 const formSchema = z.object({
@@ -196,7 +200,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
             {steps.map((step, index) => (
               <div key={step.id} className="md:flex-1">
                 {currentStep > index ? (
-                  <li className="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-cyan-500 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+                  <li className="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-cyan-500 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-6 dark:after:border-gray-700">
                     <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                       <svg
                         className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
@@ -270,6 +274,94 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <AccountDuration cohortId={cohortId} />
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 2 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 3 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 4 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 5 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 6 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 7 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 8 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* <AccountDuration cohortId={cohortId} /> */}
+            </motion.div>
+          </div>
+        )}
+        {currentStep === 9 && (
+          <div className="mt-10">
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Experience cohortId={cohortId} />
             </motion.div>
           </div>
         )}
