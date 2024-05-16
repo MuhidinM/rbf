@@ -89,8 +89,6 @@ export const create = async (
   }
 };
 
-
-
 export const edit = async (
   endpoint: Endpoint,
   values: Request

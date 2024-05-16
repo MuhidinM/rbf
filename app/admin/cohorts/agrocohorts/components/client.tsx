@@ -27,7 +27,7 @@ const CohortClient: React.FC<CohortProps> = ({ data }) => {
           <Button
             size="sm"
             className="bg-cyan-500"
-            onClick={() => router.push(`/admin/cohorts/new`)}
+            onClick={() => router.push(`/admin/cohorts/agrocohorts/new`)}
           >
             <Plus className="w-4 h-4" />
             Create New

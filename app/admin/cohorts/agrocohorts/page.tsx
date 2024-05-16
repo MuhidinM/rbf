@@ -3,7 +3,7 @@
 import { AgroCohortResponse } from "@/types/types";
 import CohortClient from "./components/client";
 import { useEffect, useMemo, useState } from "react";
-import { getAll } from "@/actions/agro-cohorts";
+import { get } from "@/actions/agro-cohorts";
 
 const Page = () => {
   const [cohorts, setCohorts] = useState<AgroCohortResponse[]>([]);
@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await getAll("api/cohorts");
+        const res = await get("api/cohorts");
         // Check if the response is an array before mapping
         if (Array.isArray(res)) {
           setCohorts(res);

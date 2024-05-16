@@ -9,12 +9,7 @@ import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { CohortResponse } from "@/types/types";
-import {
-  createCohort,
-  deleteCohort,
-  editCohort,
-} from "@/actions/cohorts-actions";
+import { AgroCohortResponse } from "@/types/types";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import {
@@ -27,46 +22,48 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CapTables from "./creators/CapTables";
-import Drivers from "./creators/Drivers";
-import Types from "./creators/Types";
-import Risks from "./creators/Risks";
+import { createData, deleteData, editData } from "@/actions/agro-cohorts";
 
 const steps = [
   {
     id: "1",
-    name: "Basic Info",
-    fields: ["name", "maxFacilityTerm", "description"],
+    fields: ["name", "description"],
   },
   {
     id: "2",
-    name: "Types",
   },
   {
     id: "3",
-    name: "Risks",
   },
   {
     id: "4",
-    name: "Cap Table",
   },
   {
     id: "5",
-    name: "Drivers",
   },
   {
     id: "6",
-    name: "Confirmations",
+  },
+  {
+    id: "7",
+  },
+  {
+    id: "8",
+  },
+  {
+    id: "9",
+  },
+  {
+    id: "10",
   },
 ];
-
 const formSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
-  maxFacilityTerm: z.coerce.number().min(1),
 });
 
 interface LevelFormProps {
-  initialData: CohortResponse | null;
+  initialData: AgroCohortResponse | null;
 }
 
 type LevelFormValues = z.infer<typeof formSchema>;
@@ -92,12 +89,10 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
     defaultValues: initialData?.id
       ? {
           name: initialData?.name,
-          maxFacilityTerm: initialData?.maxFacilityTerm,
           description: initialData?.description,
         }
       : {
           name: "",
-          maxFacilityTerm: 0,
           description: "",
         },
   });
@@ -106,7 +101,6 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
     if (initialData) {
       form.reset({
         name: initialData.name,
-        maxFacilityTerm: initialData.maxFacilityTerm,
         description: initialData.description,
       });
       setCohortId(initialData.id);
@@ -118,8 +112,8 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
     try {
       setLoading(true);
       const res = initialData?.id
-        ? await editCohort(data, initialData?.id)
-        : await createCohort(data);
+        ? await editData(`api/cohorts/${initialData?.id}`, data)
+        : await createData("api/cohorts", data);
       setCohortId(res.id);
       toast.success(toastMessage);
     } catch (error) {
@@ -160,7 +154,8 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await deleteCohort(Number(initialData?.id));
+      // await deleteCohort(Number(initialData?.id));
+      await deleteData(`api/cohorts/${Number(initialData?.id)}`);
       router.refresh();
       router.push(`/admin/cohorts`);
       toast.success("Cohort deleted.");
@@ -199,7 +194,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
         <nav aria-label="Progress">
           <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
             {steps.map((step, index) => (
-              <div key={step.name} className="md:flex-1">
+              <div key={step.id} className="md:flex-1">
                 {currentStep > index ? (
                   <li className="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-cyan-500 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                     <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
@@ -212,20 +207,17 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
                       >
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
                       </svg>
-                      <span className="whitespace-nowrap">{step.name}</span>
                     </span>
                   </li>
                 ) : currentStep === index ? (
                   <li className="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-cyan-500 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                     <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                       <span className="me-2 whitespace-nowrap">{step.id}</span>
-                      <span className="whitespace-nowrap">{step.name}</span>
                     </span>
                   </li>
                 ) : (
                   <li className="flex items-center">
                     <span className="me-2 whitespace-nowrap">{step.id}</span>
-                    <span className="whitespace-nowrap">{step.name}</span>
                   </li>
                 )}
               </div>
@@ -235,12 +227,8 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
 
         {/* Form */}
         {currentStep === 0 && (
-          // <motion.div
-          //   initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
-          //   animate={{ x: 0, opacity: 1 }}
-          //   transition={{ duration: 0.3, ease: "easeInOut" }}
-          // >
           <Form {...form}>
+            <h1 className="mt-4">hello</h1>
             <form className="grid gap-4 mt-10 md:grid-cols-2">
               <FormField
                 name="name"
@@ -250,23 +238,6 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
                     <FormLabel>Cohort Name:</FormLabel>
                     <FormControl>
                       <Input placeholder="Name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="maxFacilityTerm"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Max Facility Term:</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Max-Facility-Term"
-                        {...field}
-                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -291,7 +262,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
           // </motion.div>
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 1 && (
           <div className="mt-10">
             <motion.div
               initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
@@ -302,44 +273,8 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
             </motion.div>
           </div>
         )}
-
-        {currentStep === 4 && (
-          <div className="mt-10">
-            <motion.div
-              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <Drivers cohortId={cohortId} />
-            </motion.div>
-          </div>
-        )}
-
-        {currentStep === 1 && (
-          <div className="mt-10">
-            <motion.div
-              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <Types cohortId={cohortId} />
-            </motion.div>
-          </div>
-        )}
-        {currentStep === 2 && (
-          <div className="mt-10">
-            <motion.div
-              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <Risks cohortId={cohortId} />
-            </motion.div>
-          </div>
-        )}
-
         <form className="w-full mt-8">
-          {currentStep === 5 && (
+          {currentStep === 10 && (
             <>
               <h2 className="text-base font-semibold leading-7 text-gray-900">
                 Complete
