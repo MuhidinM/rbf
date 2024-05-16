@@ -54,6 +54,22 @@ export const getAll = async (endpoint: Endpoint) => {
     return null;
   }
 };
+export const getAccountDurationById = async (
+  endpoint: Endpoint
+): Promise<AccountResponse[]> => {
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
 
 export const create = async (
   endpoint: Endpoint,

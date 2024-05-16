@@ -160,26 +160,26 @@ export interface UserResponse {
   updatedAt: string;
 }
 
-export interface AssetRequest {
-  scoringDataType: string;
-  rangeStart: number | null;
-  rangeEnd: number | null;
-  weight: number | null;
-}
-export interface AssetResponse {
-  id: number;
-  scoringDataType: string;
-  rangeStart: number | null;
-  rangeEnd: number | null;
-  weight: number | null;
-}
+// export interface AssetRequest {
+//   scoringDataType: string;
+//   rangeStart: number | null;
+//   rangeEnd: number | null;
+//   weight: number | null;
+// }
+// export interface AssetResponse {
+//   id: number;
+//   scoringDataType: string;
+//   rangeStart: number | null;
+//   rangeEnd: number | null;
+//   weight: number | null;
+// }
 
 export interface Request {
   balanceThreshold: number;
   minWeight: number;
   description: string;
-  updatedAt: string;
-  minBalanceThreshold?: number; // Include minBalanceThreshold in the Request interface
+  minBalanceThreshold?: number;
+  cohortId?: number;
 }
 
 export interface Response {
@@ -187,21 +187,22 @@ export interface Response {
   minWeight: number;
   minBalanceThreshold?: number;
   description: string;
-  updatedAt: string;
   id: number;
+  cohortId?: number;
 }
 
 export interface SocialRequest {
   name: string;
   description: string;
   updatedAt: string;
+  cohortId?: number;
 }
 
 export interface SocialResponse {
   name: string;
   description: string;
-  updatedAt: string;
   id: number;
+  cohortId?: number;
 }
 
 export interface AccountRequest {
@@ -209,7 +210,7 @@ export interface AccountRequest {
   minMonth: number;
   minWeight: number;
   description: string;
-  updatedAt: string;
+  cohortId?: number;
 }
 
 export interface AccountResponse {
@@ -219,6 +220,7 @@ export interface AccountResponse {
   description: string;
   updatedAt: string;
   id: number;
+  cohortId?: number;
 }
 export interface AgroCohortRequest {
   name: string;

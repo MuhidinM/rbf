@@ -21,8 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import CapTables from "./creators/CapTables";
 import { createData, deleteData, editData } from "@/actions/agro-cohorts";
+import AccountDuration from "./creators/AccountDuration";
 
 const steps = [
   {
@@ -157,7 +157,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
       // await deleteCohort(Number(initialData?.id));
       await deleteData(`api/cohorts/${Number(initialData?.id)}`);
       router.refresh();
-      router.push(`/admin/cohorts`);
+      router.push(`/admin/cohorts/agrocohorts`);
       toast.success("Cohort deleted.");
     } catch (error) {
       toast.error("Something went wrong");
@@ -269,7 +269,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <CapTables cohortId={cohortId} />
+              <AccountDuration cohortId={cohortId} />
             </motion.div>
           </div>
         )}

@@ -16,6 +16,7 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import { AgroCohortType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { deleteCohort } from "@/actions/cohorts-actions";
+import { deleteData } from "@/actions/agro-cohorts";
 
 interface CellActionProps {
   data: AgroCohortType;
@@ -32,9 +33,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await deleteCohort(Number(data?.id));
+      await deleteData(`api/cohorts/${Number(data?.id)}`);
       router.refresh();
-      router.push(`/admin/cohorts`);
+      router.push(`/admin/cohorts/agrocohorts`);
       toast.success("Cohort deleted.");
     } catch (error) {
       toast.error("Something went wrong");
@@ -66,7 +67,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             Copy ID
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/admin/cohorts/${data.id}`)}
+            onClick={() => router.push(`/admin/cohorts/agrocohorts/${data.id}`)}
           >
             <Edit className="w-4 h-4 mr-2" />
             Update
