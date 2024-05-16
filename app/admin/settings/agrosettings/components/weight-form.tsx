@@ -67,7 +67,7 @@ const WeightForm = () => {
       );
     if (nextThreeTotal !== 20)
       setErrorSocial(
-        "The sum for farmer business growth must not be greater than 20!"
+        "The sum for social capital must not be greater than 20!"
       );
 
     if (firstFourTotal === 30) {

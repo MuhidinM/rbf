@@ -220,3 +220,32 @@ export interface AccountResponse {
   updatedAt: string;
   id: number;
 }
+export interface AgroCohortRequest {
+  name: string;
+  description: string;
+}
+
+export interface AgroCohortResponse {
+  id: number;
+  name: string;
+  description: string;
+  accountDurations: AccountResponse[];
+  annualFurtuFarmingIncomes: Response[];
+  annulFarmingExperience: AccountResponse[];
+  annulFarmingIncomes: Response[];
+  annualNonFarmingIncomes: Response[];
+  assets: Response[];
+  averageDailyBalances: Response[];
+  behaviours: SocialResponse[];
+  educations: SocialResponse[];
+  createdDate: Date;
+  updatedAt: Date;
+}
+
+export interface AgroCohortType {
+  id: number;
+  name: string;
+  description: string;
+  createdDate: Date;
+  updatedAt: Date;
+}

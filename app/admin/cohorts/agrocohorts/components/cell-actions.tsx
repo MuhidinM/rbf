@@ -13,12 +13,12 @@ import { toast } from "react-hot-toast";
 import { useState } from "react";
 // import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { CohortType } from "@/types/types";
+import { AgroCohortType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { deleteCohort } from "@/actions/cohorts-actions";
 
 interface CellActionProps {
-  data: CohortType;
+  data: AgroCohortType;
 }
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onCopy = (id: string) => {
@@ -54,25 +54,25 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
+          <Button variant="ghost" className="w-8 h-8 p-0">
             <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="w-4 h-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => onCopy(data.id.toString())}>
-            <Copy className="mr-2 h-4 w-4" />
+            <Copy className="w-4 h-4 mr-2" />
             Copy ID
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.push(`/admin/cohorts/${data.id}`)}
           >
-            <Edit className="mr-2 h-4 w-4" />
+            <Edit className="w-4 h-4 mr-2" />
             Update
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" />
+            <Trash className="w-4 h-4 mr-2" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

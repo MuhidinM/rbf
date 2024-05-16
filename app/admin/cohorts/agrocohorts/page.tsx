@@ -1,12 +1,12 @@
 "use client";
 
-import { CohortResponse, CohortType } from "@/types/types";
+import { AgroCohortResponse } from "@/types/types";
 import CohortClient from "./components/client";
 import { useEffect, useMemo, useState } from "react";
-import { getAllCohorts } from "@/actions/cohorts-actions";
+import { getAll } from "@/actions/agro-cohorts";
 
 const Page = () => {
-  const [cohorts, setCohorts] = useState<CohortResponse[]>([]);
+  const [cohorts, setCohorts] = useState<AgroCohortResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [updated, setUpdated] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await getAllCohorts();
+        const res = await getAll("api/cohorts");
         // Check if the response is an array before mapping
         if (Array.isArray(res)) {
           setCohorts(res);
@@ -33,19 +33,18 @@ const Page = () => {
     fetchData();
   }, [updated]);
 
-  const formattedclients = useMemo(() => {
+  const formattedCohorts = useMemo(() => {
     return cohorts.map((item) => ({
       id: item.id,
       name: item.name,
       description: item.description,
-      maxFacilityTerm: item.maxFacilityTerm,
       createdDate: item.createdDate,
       updatedAt: item.updatedAt,
     }));
   }, [cohorts]);
   return (
     <div>
-      <CohortClient data={formattedclients} />
+      <CohortClient data={formattedCohorts} />
     </div>
   );
 };

@@ -68,62 +68,62 @@ const AgroCalculator = () => {
           <div className="">
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Account Number:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 1022200133436
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Loan Application Amount:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 21000.9
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Average Daily Balance:{" "}``
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 21000
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Annual Farm Income:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 334200
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Farming Experience:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 2
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Asset:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 2
               </span>
             </h2>
-            <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white pb-2">
+            <h2 className="pb-2 mb-2 text-lg font-light text-gray-900 dark:text-white">
               Literate: <Check className="inline-flex" color="green" />
-              {/* <span className="inline-block font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              {/* <span className="inline-block space-y-1 font-semibold text-gray-500 dark:text-gray-400">
               </span> */}
             </h2>
           </div>
           <div className="">
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Annual Non-Farm Income:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 523432
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Annual Future Farm Income:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 42132
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
               Account Age:{" "}
-              <span className="max-w-md font-semibold space-y-1 text-gray-500 dark:text-gray-400">
+              <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 10
               </span>
             </h2>

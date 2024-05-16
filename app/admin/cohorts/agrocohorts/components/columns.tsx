@@ -5,9 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { CellAction } from "./cell-actions";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CohortType } from "@/types/types";
+import { AgroCohortType } from "@/types/types";
 
-export const columns: ColumnDef<CohortType>[] = [
+export const columns: ColumnDef<AgroCohortType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -36,21 +36,7 @@ export const columns: ColumnDef<CohortType>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Cohort Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "maxFacilityTerm",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Max Facility Term
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="w-4 h-4 ml-2" />
         </Button>
       );
     },
@@ -64,7 +50,7 @@ export const columns: ColumnDef<CohortType>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Description
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="w-4 h-4 ml-2" />
         </Button>
       );
     },

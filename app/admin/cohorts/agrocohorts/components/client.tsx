@@ -5,19 +5,19 @@ import { Plus } from "lucide-react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
-import { CohortType } from "@/types/types";
+import { AgroCohortType } from "@/types/types";
 import { useRouter } from "next/navigation";
 
-interface CohortClientProps {
-  data: CohortType[];
+interface CohortProps {
+  data: AgroCohortType[];
 }
 
-const CohortClient: React.FC<CohortClientProps> = ({ data }) => {
+const CohortClient: React.FC<CohortProps> = ({ data }) => {
   const router = useRouter();
 
   return (
     <>
-      <div className="flex border-b pb-2 items-center justify-between">
+      <div className="flex items-center justify-between pb-2 border-b">
         <Heading
           title={`Cohorts (${data.length})`}
           description="Manage cohorts from here"
@@ -29,7 +29,7 @@ const CohortClient: React.FC<CohortClientProps> = ({ data }) => {
             className="bg-cyan-500"
             onClick={() => router.push(`/admin/cohorts/new`)}
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="w-4 h-4" />
             Create New
           </Button>
         </div>
