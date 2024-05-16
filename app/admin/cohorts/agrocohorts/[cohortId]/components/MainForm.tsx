@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { createData, deleteData, editData } from "@/actions/agro-cohorts";
 import AccountDuration from "./creators/AccountDuration";
 import Experience from "./creators/Experience";
+import AccountBalance from "./creators/AccountBalance";
 
 const steps = [
   {
@@ -284,7 +285,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <AccountBalance cohortId={cohortId} />
             </motion.div>
           </div>
         )}
