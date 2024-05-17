@@ -73,19 +73,9 @@ const FarmingForm: FC<AgroFromProps> = ({
     // console.log(values);
     try {
       setLoading(true);
-      const dataToSend =
-        type === "api/assets"
-          ? values
-          : {
-              balanceThreshold: values.balanceThreshold,
-              minWeight: values.minWeight,
-              description: values.description,
-              updatedAt: values.updatedAt,
-            };
-
-      agroData
-        ? await edit(`${type}/${agroData.id}`, dataToSend)
-        : await create(type, dataToSend);
+          agroData
+        ? await edit(`${type}/${agroData.id}`, values)
+        : await create(type, values);
       setUpdated(!updated);
       toast.success(
         agroData ? "Updated Successfully!" : "Created Successfully!"
