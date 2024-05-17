@@ -29,6 +29,7 @@ import Fainc from "./creators/Fainc";
 import Ftainc from "./creators/Ftainc";
 import Ftaninc from "./creators/Ftaninc";
 import Asset from "./creators/Asset";
+import Behavior from "./creators/Behavior";
 
 const steps = [
   {
@@ -344,7 +345,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <Behavior cohortId={cohortId} />
             </motion.div>
           </div>
         )}

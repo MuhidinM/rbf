@@ -194,7 +194,6 @@ export interface Response {
 export interface SocialRequest {
   name: string;
   description: string;
-  updatedAt: string;
   cohortId?: number;
 }
 
