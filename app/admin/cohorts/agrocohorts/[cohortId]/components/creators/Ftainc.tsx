@@ -76,7 +76,7 @@ const Ftainc = ({ cohortId }: { cohortId: number }) => {
         >
           <div className="flex items-center justify-between px-1 space-x-4">
             <h4 className="text-sm font-semibold">
-              Default Average Account Duration
+              Default Annual Furtu Farming Income
             </h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm">
@@ -134,7 +134,7 @@ const Ftainc = ({ cohortId }: { cohortId: number }) => {
           className="w-full space-y-2"
         >
           <div className="flex items-center justify-between px-1 space-x-4">
-            <h4 className="text-sm font-semibold">Average Account Duration</h4>
+            <h4 className="text-sm font-semibold">Annual Furtu Farming Income</h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm">
                 <CaretSortIcon className="w-4 h-4" />

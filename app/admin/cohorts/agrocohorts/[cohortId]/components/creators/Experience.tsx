@@ -82,9 +82,7 @@ const Experience = ({ cohortId }: { cohortId: number }) => {
           className="w-full space-y-2"
         >
           <div className="flex items-center justify-between px-1 space-x-4">
-            <h4 className="text-sm font-semibold">
-              Default Average Account Duration
-            </h4>
+            <h4 className="text-sm font-semibold">Default Experience</h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm">
                 <CaretSortIcon className="w-4 h-4" />
@@ -147,7 +145,7 @@ const Experience = ({ cohortId }: { cohortId: number }) => {
           className="w-full space-y-2"
         >
           <div className="flex items-center justify-between px-1 space-x-4">
-            <h4 className="text-sm font-semibold">Average Account Duration</h4>
+            <h4 className="text-sm font-semibold">Experience</h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm">
                 <CaretSortIcon className="w-4 h-4" />

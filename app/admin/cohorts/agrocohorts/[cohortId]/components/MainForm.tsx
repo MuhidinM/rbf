@@ -30,6 +30,8 @@ import Ftainc from "./creators/Ftainc";
 import Ftaninc from "./creators/Ftaninc";
 import Asset from "./creators/Asset";
 import Behavior from "./creators/Behavior";
+import Literacy from "./creators/Literacy";
+import { cn } from "@/lib/utils";
 
 const steps = [
   {
@@ -356,7 +358,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <Literacy cohortId={cohortId} />
             </motion.div>
           </div>
         )}
@@ -410,9 +412,23 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
             </button>
             <button
               type="button"
+              onClick={() => {
+                router.push(`/admin/cohorts/agrocohorts`);
+              }}
+              className={cn(
+                "hidden px-2 py-1 text-sm font-semibold bg-white rounded shadow-sm text-sky-900 ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50 ",
+                currentStep === steps.length - 1 ? "block" : ""
+              )}
+            >
+              Go To Cohorts
+            </button>
+            <button
+              type="button"
               onClick={next}
-              disabled={currentStep === steps.length - 1}
-              className="px-2 py-1 text-sm font-semibold bg-white rounded shadow-sm text-sky-900 ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className={cn(
+                "px-2 py-1 text-sm font-semibold bg-white rounded shadow-sm text-sky-900 ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50 ",
+                currentStep === steps.length - 1 ? "hidden" : ""
+              )}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -14,7 +14,6 @@ import { Separator } from "@/components/ui/separator";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,13 +32,6 @@ import {
   deleteCohort,
   editCohort,
 } from "@/actions/cohorts-actions";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useCohortModal } from "@/hooks/use-cohort-modal";
 import {
   getAllRevenueProjectionTypes,
@@ -160,16 +152,16 @@ export const LevelForm: React.FC<LevelFormProps> = ({ initialData }) => {
             size="icon"
             onClick={() => setOpen(true)}
           >
-            <Trash className="h-4 w-4" />
+            <Trash className="w-4 h-4" />
           </Button>
         )}
       </div>
       <Separator />
-      <div className="spaye-y-4 py-2 pb-4">
+      <div className="py-2 pb-4 spaye-y-4">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid md:grid-cols-2 gap-4"
+            className="grid gap-4 md:grid-cols-2"
           >
             <FormField
               name="name"
@@ -215,7 +207,7 @@ export const LevelForm: React.FC<LevelFormProps> = ({ initialData }) => {
               )}
             />
             <div></div>
-            <div className="pt-6 space-x-2 flex items-start justify-end">
+            <div className="flex items-start justify-end pt-6 space-x-2">
               <Button
                 variant="outline"
                 type="button"
