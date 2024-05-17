@@ -13,15 +13,13 @@ import { create, getAll, getFarmingById } from "@/actions/agro-setting";
 import toast from "react-hot-toast";
 import FarmingForm from "./forms/farming-form";
 
-const AccountBalance = ({ cohortId }: { cohortId: number }) => {
+const Ftainc = ({ cohortId }: { cohortId: number }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [addNew, setAddNew] = useState("");
   // const [largestWeight, setLargestWeight] = useState<number>(0);
-  const [accountBalances, setAccountBalances] = useState<Response[]>([]);
-  const [accountBalancesDefault, setAccountBalancesDefault] = useState<
-    Response[]
-  >([]);
-  const [accountBalance, setAccountBalance] = useState<Response>();
+  const [ftaincs, setFtaincs] = useState<Response[]>([]);
+  const [ftaincsDefault, setFtaincsDefault] = useState<Response[]>([]);
+  const [ftainc, setFtainc] = useState<Response>();
   const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,11 +29,11 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
       try {
         setLoading(true);
         const res = await getFarmingById(
-          `api/averageDailyBalances/cohort/${cohortId}`
+          `api/annualFurtuFarmingIncomes/cohort/${cohortId}`
         );
-        setAccountBalances(res);
-        const res2 = await getAll("api/averageDailyBalances/default");
-        setAccountBalancesDefault(res2);
+        setFtaincs(res);
+        const res2 = await getAll("api/annualFurtuFarmingIncomes/default");
+        setFtaincsDefault(res2);
       } catch (error) {
         // @ts-ignore
         setError(error);
@@ -49,7 +47,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
   const AddFromDefault = async (data: Response) => {
     try {
       setLoading(true);
-      await create("api/averageDailyBalances", {
+      await create("api/annualFurtuFarmingIncomes", {
         balanceThreshold: data.balanceThreshold,
         minWeight: data.minWeight,
         description: data.description,
@@ -65,9 +63,9 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
     }
   };
 
-  // console.log("AccountBalance", AccountBalance);
-  // console.log("AccountBalancesDefault", AccountBalancesDefault);
-  // console.log("AccountBalances", AccountBalances);
+  // console.log("Ftainc", Ftainc);
+  // console.log("FtaincsDefault", FtaincsDefault);
+  // console.log("Ftaincs", Ftaincs);
   return (
     <>
       <div className="grid w-full gap-4">
@@ -101,7 +99,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
             </div>
           </div>
           <CollapsibleContent className="space-y-2">
-            {accountBalancesDefault.map((item) => (
+            {ftaincsDefault.map((item) => (
               <div className="flex space-x-2" key={item.id}>
                 <div className="grid w-full grid-cols-3 gap-2">
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
@@ -161,7 +159,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
               className="bg-cyan-500"
               disabled={loading}
               onClick={() => {
-                setAccountBalance(undefined);
+                setFtainc(undefined);
                 setAddNew("returnCapTable");
               }}
             >
@@ -169,7 +167,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
             </Button>
           </div>
           <CollapsibleContent className="space-y-2">
-            {accountBalances.map((item) => (
+            {ftaincs.map((item) => (
               <div className="flex space-x-2" key={item.id}>
                 <div className="grid w-full grid-cols-3 gap-2">
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
@@ -187,7 +185,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
                   variant="outline"
                   disabled={loading}
                   onClick={() => {
-                    setAccountBalance(item);
+                    setFtainc(item);
                     setAddNew("returnCapTable");
                   }}
                 >
@@ -204,9 +202,9 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
               setUpdated={setUpdated}
               setLoading={setLoading}
               loading={loading}
-              agroData={accountBalance}
+              agroData={ftainc}
               largestWeight={8}
-              type="api/averageDailyBalances"
+              type="api/annualFurtuFarmingIncomes"
             />
           )}
         </Collapsible>
@@ -215,4 +213,4 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
   );
 };
 
-export default AccountBalance;
+export default Ftainc;
