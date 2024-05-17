@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Check, Trash, X } from "lucide-react";
 import { create, deleteWithId, edit } from "@/actions/agro-setting";
+import { cn } from "@/lib/utils";
 
 type AgroFromProps = {
   updated: boolean;
@@ -45,6 +46,7 @@ const FarmingForm: FC<AgroFromProps> = ({
     minWeight: z.coerce.number(),
     description: z.coerce.string(),
     updatedAt: z.coerce.string(),
+    minBalanceThreshold: z.coerce.number(),
     cohortId: z.coerce.number().optional(),
   });
 
@@ -55,11 +57,13 @@ const FarmingForm: FC<AgroFromProps> = ({
           balanceThreshold: agroData.balanceThreshold,
           minWeight: agroData.minWeight,
           description: agroData.description,
+          minBalanceThreshold: agroData.minBalanceThreshold || 0,
           cohortId: cohortId,
         }
       : {
           balanceThreshold: 0,
           minWeight: 0,
+          minBalanceThreshold: 0,
           description: "",
           cohortId: cohortId,
         },
@@ -69,9 +73,19 @@ const FarmingForm: FC<AgroFromProps> = ({
     // console.log(values);
     try {
       setLoading(true);
+      const dataToSend =
+        type === "api/assets"
+          ? values
+          : {
+              balanceThreshold: values.balanceThreshold,
+              minWeight: values.minWeight,
+              description: values.description,
+              updatedAt: values.updatedAt,
+            };
+
       agroData
-        ? await edit(`${type}/${agroData.id}`, values)
-        : await create(type, values);
+        ? await edit(`${type}/${agroData.id}`, dataToSend)
+        : await create(type, dataToSend);
       setUpdated(!updated);
       toast.success(
         agroData ? "Updated Successfully!" : "Created Successfully!"
@@ -102,7 +116,12 @@ const FarmingForm: FC<AgroFromProps> = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-1 w-full space-x-2">
-            <div className={"grid w-full gap-2 grid-cols-3"}>
+            <div
+              className={cn(
+                "grid w-full gap-2 ",
+                type === "api/assets" ? "grid-cols-4" : "grid-cols-3"
+              )}
+            >
               <FormField
                 control={form.control}
                 name="balanceThreshold"
@@ -135,6 +154,24 @@ const FarmingForm: FC<AgroFromProps> = ({
                   </FormItem>
                 )}
               />
+              {type === "api/assets" && (
+                <FormField
+                  control={form.control}
+                  name="minBalanceThreshold"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="Min Balance Threshold"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
               <FormField
                 control={form.control}
                 name="description"

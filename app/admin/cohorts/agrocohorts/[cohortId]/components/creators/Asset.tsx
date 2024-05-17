@@ -13,15 +13,13 @@ import { create, getAll, getFarmingById } from "@/actions/agro-setting";
 import toast from "react-hot-toast";
 import FarmingForm from "./forms/farming-form";
 
-const AccountBalance = ({ cohortId }: { cohortId: number }) => {
+const Asset = ({ cohortId }: { cohortId: number }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [addNew, setAddNew] = useState("");
   // const [largestWeight, setLargestWeight] = useState<number>(0);
-  const [accountBalances, setAccountBalances] = useState<Response[]>([]);
-  const [accountBalancesDefault, setAccountBalancesDefault] = useState<
-    Response[]
-  >([]);
-  const [accountBalance, setAccountBalance] = useState<Response>();
+  const [assets, setAssets] = useState<Response[]>([]);
+  const [assetsDefault, setAssetsDefault] = useState<Response[]>([]);
+  const [asset, setAsset] = useState<Response>();
   const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,12 +28,10 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await getFarmingById(
-          `api/averageDailyBalances/cohort/${cohortId}`
-        );
-        setAccountBalances(res);
-        const res2 = await getAll("api/averageDailyBalances/default");
-        setAccountBalancesDefault(res2);
+        const res = await getFarmingById(`api/assets/cohort/${cohortId}`);
+        setAssets(res);
+        const res2 = await getAll("api/assets/default");
+        setAssetsDefault(res2);
       } catch (error) {
         // @ts-ignore
         setError(error);
@@ -49,9 +45,10 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
   const AddFromDefault = async (data: Response) => {
     try {
       setLoading(true);
-      await create("api/averageDailyBalances", {
+      await create("api/assets", {
         balanceThreshold: data.balanceThreshold,
         minWeight: data.minWeight,
+        minBalanceThreshold: data.minBalanceThreshold,
         description: data.description,
         cohortId: cohortId,
       });
@@ -65,9 +62,9 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
     }
   };
 
-  // console.log("AccountBalance", AccountBalance);
-  // console.log("AccountBalancesDefault", AccountBalancesDefault);
-  // console.log("AccountBalances", AccountBalances);
+  // console.log("Asset", Asset);
+  // console.log("AssetsDefault", AssetsDefault);
+  // console.log("Assets", Assets);
   return (
     <>
       <div className="grid w-full gap-4">
@@ -88,7 +85,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
             </CollapsibleTrigger>
           </div>
           <div className="flex space-x-2">
-            <div className="grid w-full grid-cols-3 gap-2">
+            <div className="grid w-full grid-cols-4 gap-2">
               <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
                 Balance Threshold
               </div>
@@ -96,19 +93,25 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
                 Minimum Weight
               </div>
               <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
+                Minimum Balance Threshold
+              </div>
+              <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
                 Description
               </div>
             </div>
           </div>
           <CollapsibleContent className="space-y-2">
-            {accountBalancesDefault.map((item) => (
+            {assetsDefault.map((item) => (
               <div className="flex space-x-2" key={item.id}>
-                <div className="grid w-full grid-cols-3 gap-2">
+                <div className="grid w-full grid-cols-4 gap-2">
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.balanceThreshold}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.minWeight}
+                  </div>
+                  <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
+                    {item.minBalanceThreshold}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.description}
@@ -145,12 +148,15 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
             </CollapsibleTrigger>
           </div>
           <div className="flex space-x-2">
-            <div className="grid w-full grid-cols-3 gap-2">
+            <div className="grid w-full grid-cols-4 gap-2">
               <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
                 Balance Threshold
               </div>
               <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
                 Minimum Weight
+              </div>
+              <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
+                Minimum Balance Threshold
               </div>
               <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
                 Description
@@ -161,7 +167,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
               className="bg-cyan-500"
               disabled={loading}
               onClick={() => {
-                setAccountBalance(undefined);
+                setAsset(undefined);
                 setAddNew("returnCapTable");
               }}
             >
@@ -169,14 +175,17 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
             </Button>
           </div>
           <CollapsibleContent className="space-y-2">
-            {accountBalances.map((item) => (
+            {assets.map((item) => (
               <div className="flex space-x-2" key={item.id}>
-                <div className="grid w-full grid-cols-3 gap-2">
+                <div className="grid w-full grid-cols-4 gap-2">
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.balanceThreshold}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.minWeight}
+                  </div>
+                  <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
+                    {item.minBalanceThreshold}
                   </div>
                   <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                     {item.description}
@@ -187,7 +196,7 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
                   variant="outline"
                   disabled={loading}
                   onClick={() => {
-                    setAccountBalance(item);
+                    setAsset(item);
                     setAddNew("returnCapTable");
                   }}
                 >
@@ -204,9 +213,9 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
               setUpdated={setUpdated}
               setLoading={setLoading}
               loading={loading}
-              agroData={accountBalance}
+              agroData={asset}
               largestWeight={8}
-              type="api/averageDailyBalances"
+              type="api/assets"
             />
           )}
         </Collapsible>
@@ -215,4 +224,4 @@ const AccountBalance = ({ cohortId }: { cohortId: number }) => {
   );
 };
 
-export default AccountBalance;
+export default Asset;

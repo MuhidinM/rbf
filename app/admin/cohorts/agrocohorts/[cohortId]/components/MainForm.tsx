@@ -25,6 +25,10 @@ import { createData, deleteData, editData } from "@/actions/agro-cohorts";
 import AccountDuration from "./creators/AccountDuration";
 import Experience from "./creators/Experience";
 import AccountBalance from "./creators/AccountBalance";
+import Fainc from "./creators/Fainc";
+import Ftainc from "./creators/Ftainc";
+import Ftaninc from "./creators/Ftaninc";
+import Asset from "./creators/Asset";
 
 const steps = [
   {
@@ -296,7 +300,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <Fainc cohortId={cohortId} />
             </motion.div>
           </div>
         )}
@@ -307,7 +311,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <Ftainc cohortId={cohortId} />
             </motion.div>
           </div>
         )}
@@ -318,7 +322,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <Ftaninc cohortId={cohortId} />
             </motion.div>
           </div>
         )}
@@ -329,7 +333,7 @@ export const MainForm: React.FC<LevelFormProps> = ({ initialData }) => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {/* <AccountDuration cohortId={cohortId} /> */}
+              <Asset cohortId={cohortId} />
             </motion.div>
           </div>
         )}
