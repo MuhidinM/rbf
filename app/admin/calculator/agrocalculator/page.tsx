@@ -53,13 +53,15 @@ const AgroCalculator = () => {
               {/* <div className="">some text</div> */}
               <div className="flex items-center w-full max-w-sm space-x-2">
                 <Input type="number" placeholder="Account Number" />
-                <Button type="submit">Calculate</Button>
+                <Button type="submit" className="bg-sky-500 hover:bg-sky-600">
+                  Calculate
+                </Button>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
-      <Card className="col-span-3 ">
+      <Card className="col-span-3">
         <CardHeader>
           <CardTitle>User Information</CardTitle>
           <CardDescription>Card Description</CardDescription>
@@ -79,7 +81,7 @@ const AgroCalculator = () => {
               </span>
             </h2>
             <h2 className="mb-2 text-lg font-light text-gray-900 dark:text-white">
-              Average Daily Balance:{" "}``
+              Average Daily Balance:{" "}
               <span className="max-w-md space-y-1 font-semibold text-gray-500 dark:text-gray-400">
                 21000
               </span>

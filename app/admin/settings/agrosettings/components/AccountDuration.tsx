@@ -59,10 +59,10 @@ const AccountDuration = () => {
         <div className="flex space-x-2">
           <div className="grid w-full grid-cols-4 gap-2">
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
-              Maximum Month
+              Minimum Month
             </div>
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
-              Minimum Month
+              Maximum Month
             </div>
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
               Minimum Weight

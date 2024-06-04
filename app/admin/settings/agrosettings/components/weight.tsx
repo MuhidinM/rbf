@@ -28,7 +28,7 @@ const Weight1 = () => {
     <div className="grid w-full gap-4">
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="">
         <div className="flex items-center justify-between px-1 space-x-4">
-          <h4 className="text-sm font-semibold">Weight (50%)</h4>
+          <h4 className="text-sm font-semibold">Weight (100%)</h4>
           <CollapsibleTrigger asChild>
             <Button variant="ghost" size="sm">
               <CaretSortIcon className="w-4 h-4" />
@@ -37,7 +37,10 @@ const Weight1 = () => {
           </CollapsibleTrigger>
         </div>
         <div className="flex space-x-2">
-          <div className="grid w-full grid-cols-2 gap-2">
+          <div className="grid w-full grid-cols-3 gap-2">
+            <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
+              Saving Culture
+            </div>
             <div className="px-4 py-2 text-sm font-semibold bg-gray-100 border rounded-md shadow-sm">
               Farmer Business Growth
             </div>
@@ -45,21 +48,13 @@ const Weight1 = () => {
               Social Capital
             </div>
           </div>
-          {/* <Button
-            size="icon"
-            disabled={loading}
-            className="bg-cyan-500"
-            onClick={() => {
-              setRisk(undefined);
-              setAddNew("risks");
-            }}
-          >
-            <Plus className="w-4 h-4" />
-          </Button> */}
         </div>
         <CollapsibleContent className="mt-2 space-y-2">
           <div className="flex space-x-2">
-            <div className="grid w-full grid-cols-2 gap-2">
+            <div className="grid w-full grid-cols-3 gap-2">
+              <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
+                50 Percent
+              </div>
               <div className="px-4 py-2 font-mono text-sm border rounded-md shadow-sm">
                 30 Percent
               </div>
@@ -67,14 +62,8 @@ const Weight1 = () => {
                 20 Percent
               </div>
             </div>
-            {/* <Button size="icon" variant="outline" disabled={loading}>
-              <Edit className="w-4 h-4" />
-            </Button> */}
           </div>
         </CollapsibleContent>
-        {/* <div className="mt-2">
-          {addNew === "risks" && <WeightFormGeneral />}
-        </div> */}
       </Collapsible>
       <Separator />
       <WeightForm />
