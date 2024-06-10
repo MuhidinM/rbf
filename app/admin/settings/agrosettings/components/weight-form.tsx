@@ -8,13 +8,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import toast from "react-hot-toast";
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL_AGRO;
+
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL_AGRO as string;
 
 const formSchema = z.object({
   accountBalance: z.coerce.number(),
@@ -31,15 +32,23 @@ const formSchema = z.object({
   experience: z.coerce.number(),
 });
 
-const WeightForm = () => {
-  const [errorAccount, setErrorAccount] = useState("");
-  const [errorFarming, setErrorFarming] = useState("");
-  const [errorSocial, setErrorSocial] = useState("");
-  const [maxEducation, setMaxEducation] = useState(0);
-  const [maxBehavior, setMaxBehavior] = useState(0);
-  const [loading, setLoading] = useState(true);
+type FormSchema = z.infer<typeof formSchema>;
 
-  const form = useForm<z.infer<typeof formSchema>>({
+interface Weight {
+  id: number;
+  scoringDataType: string;
+  weight: number;
+}
+
+const WeightForm: React.FC = () => {
+  const [errorAccount, setErrorAccount] = useState<string>("");
+  const [errorFarming, setErrorFarming] = useState<string>("");
+  const [errorSocial, setErrorSocial] = useState<string>("");
+  const [maxEducation, setMaxEducation] = useState<number>(0);
+  const [maxBehavior, setMaxBehavior] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       accountBalance: 0,
@@ -67,8 +76,8 @@ const WeightForm = () => {
   useEffect(() => {
     fetch(`${API_URL}api/weights`)
       .then((response) => response.json())
-      .then((data) => {
-        const defaultValues = {
+      .then((data: Weight[]) => {
+        const defaultValues: FormSchema = {
           accountBalance:
             data.find((item) => item.scoringDataType === "AVERAGEDAILYBALANCE")
               ?.weight || 0,
@@ -113,9 +122,9 @@ const WeightForm = () => {
         setLoading(false);
       })
       .catch((error) => console.error("Error fetching weights:", error));
-  }, []);
+  }, [form]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormSchema) => {
     const {
       accountBalance,
       accountDuration,
@@ -174,7 +183,11 @@ const WeightForm = () => {
       setErrorSocial("");
     }
 
-    const updateWeight = async (id, scoringDataType, weight) => {
+    const updateWeight = async (
+      id: number,
+      scoringDataType: string,
+      weight: number
+    ) => {
       const response = await fetch(`${API_URL}api/weights/${id}`, {
         method: "PUT",
         headers: {
@@ -186,8 +199,8 @@ const WeightForm = () => {
     };
 
     try {
-      const weights = await fetch(`${API_URL}api/weights`).then((res) =>
-        res.json()
+      const weights: Weight[] = await fetch(`${API_URL}api/weights`).then(
+        (res) => res.json()
       );
 
       const updates = [
@@ -238,6 +251,7 @@ const WeightForm = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
   return (
     <Form {...form}>
       <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
