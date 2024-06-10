@@ -35,6 +35,8 @@ const WeightForm = () => {
   const [errorAccount, setErrorAccount] = useState("");
   const [errorFarming, setErrorFarming] = useState("");
   const [errorSocial, setErrorSocial] = useState("");
+  const [maxEducation, setMaxEducation] = useState(0);
+  const [maxBehavior, setMaxBehavior] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -106,6 +108,8 @@ const WeightForm = () => {
               ?.weight || 0,
         };
         form.reset(defaultValues);
+        setMaxEducation(defaultValues.literacy);
+        setMaxBehavior(defaultValues.behavior);
         setLoading(false);
       })
       .catch((error) => console.error("Error fetching weights:", error));
@@ -134,7 +138,6 @@ const WeightForm = () => {
       forecastedTotalAnnualNonFarmIncome +
       asset;
     const socialTotal = literacy + behavior + experience;
-
     if (accountTotal !== 50) {
       setErrorAccount("The sum for Accounts must be 50!");
       return;
@@ -151,6 +154,21 @@ const WeightForm = () => {
 
     if (socialTotal !== 20) {
       setErrorSocial("The sum for social capital must be 20!");
+      return;
+    } else {
+      setErrorSocial("");
+    }
+
+    if (illiterate >= maxEducation) {
+      setErrorSocial("Illiterate weight must be less than literate");
+      return;
+    } else {
+      setErrorSocial("");
+    }
+    if (moderateBehavior >= maxBehavior || badBehavior >= maxBehavior) {
+      setErrorSocial(
+        "Moderate behavior or Bad behavior weight must be less than Good behavior"
+      );
       return;
     } else {
       setErrorSocial("");
@@ -220,7 +238,6 @@ const WeightForm = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
   return (
     <Form {...form}>
       <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
