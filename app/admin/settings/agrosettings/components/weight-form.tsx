@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   FormControl,
@@ -13,6 +13,8 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import toast from "react-hot-toast";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL_AGRO;
 
 const formSchema = z.object({
   accountBalance: z.coerce.number(),
@@ -30,27 +32,71 @@ const WeightForm = () => {
   const [errorAccount, setErrorAccount] = useState("");
   const [errorFarming, setErrorFarming] = useState("");
   const [errorSocial, setErrorSocial] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      accountBalance: 35,
-      accountDuration: 15,
-      forecastedAnnualIncome: 10,
-      forecastedTotalAnnualFarmIncome: 8,
-      forecastedTotalAnnualNonFarmIncome: 4,
-      asset: 8,
-      literacy: 5,
-      behavior: 8,
-      experience: 7,
+      accountBalance: 0,
+      accountDuration: 0,
+      forecastedAnnualIncome: 0,
+      forecastedTotalAnnualFarmIncome: 0,
+      forecastedTotalAnnualNonFarmIncome: 0,
+      asset: 0,
+      literacy: 0,
+      behavior: 0,
+      experience: 0,
     },
   });
 
   const {
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = form;
 
-  const onSubmit = (data) => {
+  useEffect(() => {
+    fetch(`${API_URL}api/weights`)
+      .then((response) => response.json())
+      .then((data) => {
+        const defaultValues = {
+          accountBalance:
+            data.find((item) => item.scoringDataType === "AVERAGEDAILYBALANCE")
+              ?.weight || 0,
+          accountDuration:
+            data.find((item) => item.scoringDataType === "ACCOUNTAGE")
+              ?.weight || 0,
+          forecastedAnnualIncome:
+            data.find(
+              (item) => item.scoringDataType === "ANNUALFURTUFARMINGINCOME"
+            )?.weight || 0,
+          forecastedTotalAnnualFarmIncome:
+            data.find((item) => item.scoringDataType === "ANNUALFARMINGINCOME")
+              ?.weight || 0,
+          forecastedTotalAnnualNonFarmIncome:
+            data.find(
+              (item) => item.scoringDataType === "ANNUALNONFARMINGINCOME"
+            )?.weight || 0,
+          asset:
+            data.find((item) => item.scoringDataType === "ASSET")?.weight || 0,
+          literacy:
+            data.find((item) => item.scoringDataType === "LITERATE")?.weight ||
+            0,
+          behavior:
+            data.find((item) => item.scoringDataType === "GOODBEHAVIOUR")
+              ?.weight || 0,
+          experience:
+            data.find((item) => item.scoringDataType === "FARMINGEXPERIENCE")
+              ?.weight || 0,
+        };
+        form.reset(defaultValues);
+        setLoading(false);
+      })
+      .catch((error) => console.error("Error fetching weights:", error));
+  }, []);
+
+  const onSubmit = async (data) => {
     const {
       accountBalance,
       accountDuration,
@@ -64,34 +110,95 @@ const WeightForm = () => {
     } = data;
 
     const accountTotal = accountBalance + accountDuration;
-
     const farmingTotal =
       forecastedAnnualIncome +
       forecastedTotalAnnualFarmIncome +
       forecastedTotalAnnualNonFarmIncome +
       asset;
-
     const socialTotal = literacy + behavior + experience;
 
-    if (accountTotal !== 50)
+    if (accountTotal !== 50) {
       setErrorAccount("The sum for Accounts must be 50!");
-    if (farmingTotal !== 30)
-      setErrorFarming("The sum for farmer business growth must be 30!");
-    if (socialTotal !== 20)
-      setErrorSocial("The sum for social capital must be 20!");
-
-    if (accountTotal === 30) {
+      return;
+    } else {
       setErrorAccount("");
     }
-    if (farmingTotal === 20) {
-      setErrorSocial("");
+
+    if (farmingTotal !== 30) {
+      setErrorFarming("The sum for farmer business growth must be 30!");
+      return;
+    } else {
+      setErrorFarming("");
     }
-    if (socialTotal === 20) {
+
+    if (socialTotal !== 20) {
+      setErrorSocial("The sum for social capital must be 20!");
+      return;
+    } else {
       setErrorSocial("");
     }
 
-    // console.log("Form submitted with data:", data);
+    const updateWeight = async (id, scoringDataType, weight) => {
+      const response = await fetch(`${API_URL}api/weights/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ scoringDataType, weight }),
+      });
+      return response.json();
+    };
+
+    try {
+      const weights = await fetch(`${API_URL}api/weights`).then((res) =>
+        res.json()
+      );
+
+      const updates = [
+        { scoringDataType: "AVERAGEDAILYBALANCE", weight: accountBalance },
+        { scoringDataType: "ACCOUNTAGE", weight: accountDuration },
+        {
+          scoringDataType: "ANNUALFURTUFARMINGINCOME",
+          weight: forecastedAnnualIncome,
+        },
+        {
+          scoringDataType: "ANNUALFARMINGINCOME",
+          weight: forecastedTotalAnnualFarmIncome,
+        },
+        {
+          scoringDataType: "ANNUALNONFARMINGINCOME",
+          weight: forecastedTotalAnnualNonFarmIncome,
+        },
+        { scoringDataType: "ASSET", weight: asset },
+        { scoringDataType: "FARMINGEXPERIENCE", weight: experience },
+        { scoringDataType: "LITERATE", weight: literacy },
+        { scoringDataType: "GOODBEHAVIOUR", weight: behavior },
+      ];
+
+      await Promise.all(
+        updates.map(async (update) => {
+          const weightData = weights.find(
+            (item) => item.scoringDataType === update.scoringDataType
+          );
+          if (weightData) {
+            await updateWeight(
+              weightData.id,
+              update.scoringDataType,
+              update.weight
+            );
+          }
+        })
+      );
+      toast.success("Data updated successfully");
+      console.log("Data updated successfully");
+    } catch (error) {
+      console.error("Error updating weights:", error);
+    }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Form {...form}>
