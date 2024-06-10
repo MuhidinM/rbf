@@ -24,7 +24,10 @@ const formSchema = z.object({
   forecastedTotalAnnualNonFarmIncome: z.coerce.number(),
   asset: z.coerce.number(),
   literacy: z.coerce.number(),
+  illiterate: z.coerce.number(),
   behavior: z.coerce.number(),
+  moderateBehavior: z.coerce.number(),
+  badBehavior: z.coerce.number(),
   experience: z.coerce.number(),
 });
 
@@ -44,7 +47,10 @@ const WeightForm = () => {
       forecastedTotalAnnualNonFarmIncome: 0,
       asset: 0,
       literacy: 0,
+      illiterate: 0,
       behavior: 0,
+      moderateBehavior: 0,
+      badBehavior: 0,
       experience: 0,
     },
   });
@@ -89,6 +95,15 @@ const WeightForm = () => {
           experience:
             data.find((item) => item.scoringDataType === "FARMINGEXPERIENCE")
               ?.weight || 0,
+          badBehavior:
+            data.find((item) => item.scoringDataType === "BADBEHAVIOUR")
+              ?.weight || 0,
+          moderateBehavior:
+            data.find((item) => item.scoringDataType === "MODERATEBEHAVIOUR")
+              ?.weight || 0,
+          illiterate:
+            data.find((item) => item.scoringDataType === "ILLITERATE")
+              ?.weight || 0,
         };
         form.reset(defaultValues);
         setLoading(false);
@@ -105,6 +120,9 @@ const WeightForm = () => {
       forecastedTotalAnnualNonFarmIncome,
       asset,
       literacy,
+      illiterate,
+      moderateBehavior,
+      badBehavior,
       behavior,
       experience,
     } = data;
@@ -173,6 +191,9 @@ const WeightForm = () => {
         { scoringDataType: "FARMINGEXPERIENCE", weight: experience },
         { scoringDataType: "LITERATE", weight: literacy },
         { scoringDataType: "GOODBEHAVIOUR", weight: behavior },
+        { scoringDataType: "ILLITERATE", weight: illiterate },
+        { scoringDataType: "MODERATEBEHAVIOUR", weight: moderateBehavior },
+        { scoringDataType: "BADBEHAVIOUR", weight: badBehavior },
       ];
 
       await Promise.all(
@@ -295,7 +316,20 @@ const WeightForm = () => {
               name="literacy"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Literacy</FormLabel>
+                  <FormLabel>Literate</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="illiterate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Illiterate</FormLabel>
                   <FormControl>
                     <Input {...field} type="number" />
                   </FormControl>
@@ -308,7 +342,33 @@ const WeightForm = () => {
               name="behavior"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Behavior</FormLabel>
+                  <FormLabel>Good Behavior</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="moderateBehavior"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel> Moderate Behavior</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="badBehavior"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bad Behavior</FormLabel>
                   <FormControl>
                     <Input {...field} type="number" />
                   </FormControl>
